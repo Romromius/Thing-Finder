@@ -2,10 +2,138 @@
 {% block content %}
 
 <form>
-  <div class="form-group">
-	<label for="exampleFormControlFile1">select photo</label>
-	<input type="file" class="form-control-file" id="exampleFormControlFile1">
-  </div>
+<!--    CHECK list_of_properties-->
+    <div class="form-group">
+	    <label for="SelectPhoto">Выберите фото</label>
+	    <input type="file" class="form-control-file" id="SelectPhoto">
+    </div>
+    <div class="form-group">
+        <label for="AdName">Назваание предмета</label>
+        <input type="text" class="form-control" id="AdName" placeholder="введите название предмета">
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Amount">Количество</label>
+      <select class="custom-select mr-sm-2" id="Amount">
+        <option selected>Количество...</option>
+        <option value="1">Один</option>
+        <option value="2">Несколько</option>
+        <option value="3">Много</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Color">Цвет</label>
+      <select class="custom-select mr-sm-2" id="Color">
+        <option selected>Цвет...</option>
+        <option value="1">красный</option>
+        <option value="2">синий</option>
+        <option value="3">зеленый</option>
+        <option value="4">желтый</option>
+        <option value="5">оранжевый</option>
+        <option value="6">фиолетовый</option>
+        <option value="7">розовый</option>
+        <option value="8">темно-синий</option>
+        <option value="9">темно-красный</option>
+        <option value="10">темно-зеленый</option>
+        <option value="11">бордовый</option>
+        <option value="12">коричневый</option>
+        <option value="13">черный</option>
+        <option value="14">белый</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Material">Материал</label>
+      <select class="custom-select mr-sm-2" id="Material">
+        <option selected>Материал...</option>
+        <option value="1">дерево</option>
+        <option value="2">металл</option>
+        <option value="3">пластмасса</option>
+        <option value="4">стекло</option>
+        <option value="5">ткань</option>
+        <option value="6">резина</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Defect">Дефект</label>
+      <select class="custom-select mr-sm-2" id="Defect">
+        <option selected>Дефект...</option>
+        <option value="1">нет</option>
+        <option value="2">царапины</option>
+        <option value="3">трещины</option>
+        <option value="4">вмятины</option>
+        <option value="5">изношенный</option>
+      </select>
+    </div>
+      <div class="form-group">
+      <label class="mr-sm-2" for="Case">Чехол</label>
+      <select class="custom-select mr-sm-2" id="Case">
+        <option selected>Чехол...</option>
+        <option value="1">нет</option>
+        <option value="2">да</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Producer">Производитель</label>
+      <select class="custom-select mr-sm-2" id="Producer">
+        <option selected>Производитель...</option>
+        <option value="0">Россия</option>
+        <option value="1">Сша</option>
+        <option value="2">Япония</option>
+        <option value="3">Китай</option>
+        <option value="4">другое</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Form">Форма</label>
+      <select class="custom-select mr-sm-2" id="Form">
+        <option selected>Форма...</option>
+        <option value="0">круглый</option>
+        <option value="1">квадратный</option>
+        <option value="2">прямоугольный</option>
+        <option value="3">полукруглый</option>
+        <option value="4">цилиндр</option>
+        <option value="5">тетраэдр</option>
+        <option value="6">призма</option>
+        <option value="7">октаэр</option>
+        <option value="8">додэкаэр</option>
+        <option value="9">сложная</option>
+        <option value="10">аморфная</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Size">Размер</label>
+      <select class="custom-select mr-sm-2" id="Size">
+        <option selected>Размер...</option>
+        <option value="0">мельчайший</option>
+        <option value="1">маленький</option>
+        <option value="2">средний</option>
+        <option value="3">большой</option>
+        <option value="4">огромный</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Strength">Прочность</label>
+      <select class="custom-select mr-sm-2" id="Strength">
+        <option selected>Прочность...</option>
+        <option value="0">хрупчайший</option>
+        <option value="1">хрупкий</option>
+        <option value="2">нормальный</option>
+        <option value="3">бронированный</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Other">Другое</label>
+      <select class="custom-select mr-sm-2" id="Other">
+        <option selected>Другое...</option>
+        <option value="0">неприятный запах</option>
+        <option value="1">приятный запах</option>
+        <option value="2">грязный</option>
+        <option value="3">опасный</option>
+        <option value="4">живой</option>
+        <option value="5">старый</option>
+      </select>
+    </div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+
 </form>
 
 {% endblock %}
