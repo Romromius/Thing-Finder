@@ -1,1 +1,1 @@
-from .models import Desc, User, Item, Prop
+from .models import Description, User, Item, Property, PropValue
