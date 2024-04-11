@@ -11,6 +11,6 @@ for i in items:
     print(i.name)
     print('Приметы:')
     [print('>', j) for j in i.get_props()]
+    print('Анализ🤖...')
+    print(i.seek_for_variants())
     print('-----\n')
-
-items[3].set_image(open('png-clipart-ryuko-matoi-senketsu-scissors-blade-paper-scissors-technic-scissors.png', 'rb').read())

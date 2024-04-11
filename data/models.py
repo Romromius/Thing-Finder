@@ -15,6 +15,11 @@ from data.db_session import SqlAlchemyBase, create_session
 
 # Base = declarative_base()
 
+def jaccard_similarity(set1: set, set2: set) -> float:
+    intersection = len(set1 & set2)
+    union = len(set1 | set2)
+    return intersection / union if union != 0 else 0
+
 
 class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = "users"
@@ -38,7 +43,17 @@ class Item(SqlAlchemyBase):
     owner = Column(Integer, ForeignKey('users.id'))
     name = Column(String)
     type = Column(Integer)
-    status = Column(Boolean)
+    status = Column(Boolean, default=0)
+
+    def seek_for_variants(self):
+        variants = {}
+        session = create_session()
+        for item in session.query(Item).filter(Item.type != self.type, Item.id != self.id):
+            if jaccard_similarity(set(self.get_props()), set(item.get_props())) > 0.1:
+                variants[item.name] = jaccard_similarity(set(self.get_props()), set(item.get_props()))
+
+        del session
+        return {k: v for k, v in sorted(variants.items(), key=lambda x: x[1], reverse=True)}
 
     def get_props(self):
         session = create_session()
@@ -47,6 +62,7 @@ class Item(SqlAlchemyBase):
             prop_value = session.query(PropValue).filter_by(id=description.value).first()
             if prop_value:
                 fancy_props.append(prop_value.value)
+        del session
         return fancy_props
 
     def set_image(self, file: bytes):
