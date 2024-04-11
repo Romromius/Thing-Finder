@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>site</title>
+	<link rel="stylesheet" type="text/css" href="{{ url }}"/>
 	<link rel="shortcut icon" href="static/img/icon.png">
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -20,12 +21,6 @@
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			  <span class="navbar-toggler-icon"></span>
 			</button>
-
-			<div>
-				<a class="navbar-nav" href="http://127.0.0.1:5000/catmail">
-					<span class="material-symbols-outlined">mark_as_unread</span>
-				</a>
-			</div>
 
 			<form class="form-inline my-2 my-lg-0">
 				<input class="form-control mr-sm-2" type="search" placeholder="enter ad ID/NAME" aria-label="Search">
@@ -54,8 +49,8 @@
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="http://127.0.0.1:5000/rating">
-						Мои объявления и рейтинг<span class="material-symbols-outlined">progress_activity</span>
+					<a class="nav-link" href="http://127.0.0.1:5000/myads">
+						Мои объявления<span class="material-symbols-outlined">progress_activity</span>
 					</a>
 				</li>
 			  </ul>
@@ -82,11 +77,11 @@
 		<svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
 		</a>
 	
-		<ul class="nav col-md-4 justify-content-end">
-		<li class="nav-item"><a class="nav-link" href="http://127.0.0.1:5000/catdocs">Документация<span class="material-symbols-outlined">quiz</span></a></li>
-		<li class="nav-item"><a href="#bot" class="nav-link px-2 text-body-secondary" style="color:aqua">Bot<span class="material-symbols-outlined">robot_2</span></a></li>
-		<li class="nav-item"><a href="http://127.0.0.1:5000/donate" class="nav-link px-2 text-body-secondary" style="color: green">Donate<span class="material-symbols-outlined">monetization_on</span></a></li>
-			<li class="nav-item"><a href="#buttonactive" style="color: red">Feedback<span class="material-symbols-outlined">delete</span></a></li>
+		<ul class="nav col-md-3 justify-content-end">
+		<li class="nav-item"><a href="http://127.0.0.1:5000/catdocs" class="nav-link">Документация<span class="material-symbols-outlined" style="color: orange">quiz</span></a></li>
+		<li class="nav-item"><a href="#buttonactive" class="nav-link">Bot<span class="material-symbols-outlined" style="color: green">robot_2</span></a></li>
+		<li class="nav-item"><a href="http://127.0.0.1:5000/donate" class="nav-link">Donate<span class="material-symbols-outlined" style="color: yellow">monetization_on</span></a></li>
+		<li class="nav-item"><a href="#buttonactive" class="nav-link">Feedback<span class="material-symbols-outlined" style="color: red">delete</span></a></li>
 		</ul>
 	</footer>
 </body>

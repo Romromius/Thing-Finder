@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json
+from flask import Flask, render_template, json, request, url_for
 import os
 
 app = Flask(__name__)
@@ -7,16 +7,31 @@ app = Flask(__name__)
 @app.route('/index')  # EDITING...
 @app.route('/')
 def site():
-    params = {
-    }
+    params = {"url": url_for('static', filename='css/style.css')}
     return render_template("index_ads.html", **params)
 
 
-@app.route("/form_register", methods=['GET', 'POST'])  # NEED A TEMPLATE, REALIZATION
+@app.route("/form_register", methods=['GET', 'POST'])  # NEED A REALIZATION
 def form_register():
-    params = {
-    }
-    return render_template("form_register.html", **params)
+    if request.method == "GET":
+        params = {}
+        return render_template("form_register.html", **params)
+    else:
+        for i in list(request.form.keys()):
+            print(i, request.form.get(i))
+        request.method = "GET"
+        return """<!doctype>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>site</title>
+            <link rel="shortcut icon" href="static/img/icon.png">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        </head>
+        <body>
+            <h1>Вы успешно зарегистрировались!</h1>
+        </body>
+        </html>"""
 
 
 @app.route("/form_ad", methods=['GET', 'POST'])  # NEED A REALIZATION
@@ -26,21 +41,14 @@ def form_ad():
     return render_template("form_ad.html", **params)
 
 
-@app.route("/rating")  # NEED A TEMPLATE, REALIZATION
-def rating():
+@app.route("/myads")  # NEED A REALIZATION
+def myads():
     params = {
     }
-    return render_template("rating.html", **params)
+    return render_template("my_ads.html", **params)
 
 
-@app.route("/catmail")  # NEED A TEMPLATE, REALIZATION
-def catmail():
-    params = {
-    }
-    return render_template("catmail.html", **params)
-
-
-@app.route("/catdocs")  # NEED A DOCS
+@app.route("/catdocs")  # finished
 def catdocs():
     return render_template("catdocs.html")
 
