@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% block content %}
+<style type="text/css">
+	.err {
+		color: red;
+	}
+</style>
+<form class="login_form" method="post">
+	{% if name == "!" %}<p class="err">Имя занято</p>{% endif %}
+	<label for="name">Введите имя</label>
+	<input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+
+	{% if email == "!" %}<p class="err">Почта занята</p>{% endif %}
+	<label for="email">Введите почту</label>
+	<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+<!--	ПОДУМАТЬ КАК РЕАЛИЗОВАТЬ ПРОВЕРКУ ПОЧТЫ ЧЕРЕЗ КОД	-->
+<!--	<label for="InputCode">Введите код с почты</label>-->
+<!--	<input type="text" class="form-control" id="InputCode" placeholder="Enter code from email" name="passcode">-->
+	<label for="Password1">Введите пароль</label>
+	<input type="password" class="form-control" id="Password1" placeholder="Enter new password" name="pass1">
+
+	{% if pass == "!" %}<p class="err">Пароли не совпадают</p>{% endif %}
+	<label for="Password2">Повторите пароль</label>
+	<input type="password" class="form-control" id="Password2" placeholder="Repeat password" name="pass2">
+
+	{% if tg == "!" %}<p class="err">Неправильная ссылка</p>{% endif %}
+	<label for="Telegram">Вставьте ссылку на ваш телеграмм</label>
+	<input type="text" class="form-control" id="Telegram" placeholder="Enter telegram link" name="tg">
+
+	{% if botcheck == "!" %}<p class="err">Вы не прошли проверку на бота</p>{% endif %}
+	<div class="form-group form-check">
+		<input type="checkbox" class="form-check-input" id="botcheck" name="botcheck">
+		<label class="form-check-label" for="botcheck">check for bot</label>
+	</div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+{% endblock %}
