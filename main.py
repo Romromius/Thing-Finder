@@ -4,6 +4,10 @@ from data.__all_models import *
 import smtplib
 from email.mime.multipart import MIMEMultipart
 import os
+from flask_restful import reqparse, abort, Api, Resource
+import api_resources
+
+
 db_session.global_init("db/TF_db.sqlite")
 session = db_session.create_session()
 
@@ -42,6 +46,7 @@ def register_user(name, email, password, tg):
 
 
 app = Flask(__name__)
+api = Api(app)
 
 
 @app.route('/index')  # EDITING...
@@ -123,5 +128,11 @@ def donate():
 
 
 if __name__ == '__main__':
+    api.add_resource(api_resources.UsersResource, '/api/user/<user_name>')
+    api.add_resource(api_resources.ItemResource, '/api/item/'
+                                                 'id=<item_id>;'
+                                                 'user_name=<user_name>;'
+                                                 'password=<password>')
+
     port = int(os.environ.get("PORT", 5000))
-    app.run(port=port, host='127.0.0.1')  # 0.0.0.0
+    app.run(port=port, host='127.0.0.1')  # 0.0.0.0  # ?

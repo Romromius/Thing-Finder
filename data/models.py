@@ -37,7 +37,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
         return check_password_hash(self.hashed_password, password)
 
 
-class Item(SqlAlchemyBase):
+class Item(SqlAlchemyBase, SerializerMixin):
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True, index=True)
