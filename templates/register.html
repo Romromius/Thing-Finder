@@ -5,7 +5,12 @@
 		color: red;
 	}
 </style>
-<form class="login_form" method="post">
+
+<div>
+	<h1 style="color: aqua; text-align: center; font-size: 45px">Зарегистрируйтесь!</h1>
+</div>
+
+<form class="login_form" method="post" style="{{ url }}">
 	{% if name == "!" %}<p class="err">Имя занято</p>{% endif %}
 	<label for="name">Введите имя</label>
 	<input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
@@ -19,7 +24,7 @@
 	<label for="Password1">Введите пароль</label>
 	<input type="password" class="form-control" id="Password1" placeholder="Enter new password" name="pass1">
 
-	{% if pass == "!" %}<p class="err">Пароли не совпадают</p>{% endif %}
+	{% if pass == "!" %}<p class="err">Пароли не совпадают/Пустое поле</p>{% endif %}
 	<label for="Password2">Повторите пароль</label>
 	<input type="password" class="form-control" id="Password2" placeholder="Repeat password" name="pass2">
 

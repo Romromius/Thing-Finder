@@ -1,4 +1,33 @@
 {% extends "main.html" %}
 {% block content %}
+<style type="text/css">
+	.err {
+		color: red;
+		text-align: center;
+	}
+</style>
+<div>
+	<h1 style="color: aqua; text-align: center; font-size: 45px">Войдите в аккаунт!</h1>
+</div>
+
+
+<form class="login_form" method="post" style="{{ url }}">
+	{% if name == "!" or pass == "!" %}<p class="err">Неверное имя или пароль!</p>{% endif %}
+	<label for="name">Введите имя</label>
+	<input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+
+	<label for="Password">Введите пароль</label>
+	<input type="password" class="form-control" id="Password" placeholder="Enter your password" name="pass">
+
+	{% if botcheck == "!" %}<p class="err">Вы не прошли проверку на бота</p>{% endif %}
+	<div class="form-group form-check">
+		<input type="checkbox" class="form-check-input" id="botcheck" name="botcheck">
+		<label class="form-check-label" for="botcheck">check for bot</label>
+	</div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
 
 {% endblock %}

@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, url_for, redirect
 from data import db_session
 from data.__all_models import *
 import smtplib
-from email.mime.multipart import MIMEMultipart
 import os
 from flask_restful import reqparse, abort, Api, Resource
 import api_resources
@@ -73,11 +72,32 @@ def lk():
 
 @app.route("/login", methods=['GET', 'POST'])  # NEED A REALIZATION
 def login():
-    params = {}
+    params = {
+        "namepass": "ok",
+        "botcheck": "ok"
+    }
     if 'GET' == request.method:
         return render_template("login.html", **params)
 
-    ...
+    for i in list(request.form.keys()):
+        print(i, request.form.get(i))
+
+    password = request.form.get("pass")
+    name = request.form.get("name")
+    obj = session.query(User).filter(User.name == name).first()
+    try:
+        if not obj.check_password(password):
+            params["namepass"] = "!"
+    except AttributeError:
+        params["namepass"] = "!"
+
+    if request.form.get("botcheck") is None:
+        params["botcheck"] = "!"
+
+    for ok in params.values():
+        if ok != "ok":
+            return render_template("login.html", **params)
+
     return redirect("/lk")
 
 
@@ -100,7 +120,7 @@ def register():
         params["name"] = "!"
     if request.form.get("email") in [i.email for i in session.query(User).all()]:
         params["email"] = "!"
-    if request.form.get("pass1") != request.form.get("pass2"):
+    if request.form.get("pass1") != request.form.get("pass2") or len(request.form.get("pass1")) == 0:
         params["pass"] = "!"
     if request.form.get("tg")[:13] != "https://t.me/":
         params["tg"] = "!"
@@ -114,7 +134,7 @@ def register():
     register_user(request.form.get("name"), request.form.get("email"), request.form.get("pass1"),
                   request.form.get("tg"))
 
-    return redirect("login")
+    return redirect("/login")
 
 
 @app.route("/catdocs")  # finished
