@@ -1,27 +1,28 @@
+import datetime
+
 from flask import Flask, render_template, request, url_for, redirect
 from data import db_session
 from data.__all_models import *
 import smtplib
+from email.mime.multipart import MIMEMultipart
 import os
-from flask_restful import reqparse, abort, Api, Resource
-import api_resources
-
 
 db_session.global_init("db/TF_db.sqlite")
 session = db_session.create_session()
 
 
-def send_email(msg):
-    sender = os.getenv("MAIL")
-    password = os.getenv("PASSWORD")
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.starttls()
-    
-    server.login(sender, password)
-    server.sendmail(sender, sender, msg)
-
-    server.quit()
+# def send_email(msg):
+#     sender = os.getenv("MAIL")
+#     password = os.getenv("PASSWORD")
+#
+#     server = smtplib.SMTP("smtp.gmail.com", 587)
+#     server.starttls()
+#
+#     server.login(sender, password)
+#     server.sendmail(sender, sender, msg)
+#
+#     server.quit()
     # send_email("ququ")
 
 
@@ -44,64 +45,71 @@ def register_user(name, email, password, tg):
     session.commit()
 
 
+# \/----------------ОБРАБОТЧИКИ--------------\/
 app = Flask(__name__)
-api = Api(app)
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
+    days=365
+)
 
 
-@app.route('/index')  # EDITING...
+@app.route('/index')  # ON FINISH LINE
 @app.route('/')
 def site():
     params = {
-        "url": url_for('static', filename='css/style.css')
-        }
+        "url": url_for('static', filename='css/style.css'),
+        "lst": session.query(Item).filter(Item.type == "0").filter(Item.status == "1").all(),
+        "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
+    }
     return render_template("index_ads.html", **params)
 
 
-@app.route("/form_ad", methods=['GET', 'POST'])  # NEED A REALIZATION
+@app.route("/form_ad", methods=['GET', 'POST'])  # NEED A BUTTON
 def form_ad():
     params = {
+        'amount': ['один', 'несколько', 'множество'],
+        'color': ['разноцветный', 'красный', 'синий', 'зеленый', 'желтый', 'оранжевый',
+                  'фиолетовый', 'розовый', 'темно-синий', 'темно-красный', 'темно-зеленый',
+                  'бордовый', 'коричневый', 'черный', 'белый'],
+        'material': ['дерево', 'металл', 'пластмасса', 'стекло', 'ткань', 'резина'],
+        'defects': ['нет', 'царапины', 'трещины', 'вмятины', 'изношенный'],
+        'case': ['нет', 'да'],
+        'prod': ['Россия', 'Сша', 'Япония', 'Китай', 'другое'],
+        'form': ['круглый', 'квадратный', 'прямоугольный', 'полукруглый', 'цилиндр'],
+        'size': ['мельчайший', 'маленький', 'средний', 'большой', 'огромный'],
+        'strength': ['хрупчайший', 'хрупкий', 'нормальный', 'бронированный'],
+        'other': ['неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый']
     }
-    return render_template("form_ad.html", **params)
+    if 'GET' == request.method:
+        return render_template("form_ad.html", **params)
+
+    for i in list(request.form.keys()):
+        print(i, request.form.get(i))
+
+    params = {"verdict": "Ваша форма отправлена успешно!"}
+    return render_template("index_ads.html", **params)
 
 
-@app.route("/lk")  # NEED A REALIZATION
+@app.route("/lk")  # NEED A COOKIE
 def lk():
-    params = {}
+    const = "4"
+    params = {
+        "lst": session.query(Item).filter(Item.owner == const).all(),
+        "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
+        }
     return render_template("lk.html", **params)
 
 
 @app.route("/login", methods=['GET', 'POST'])  # NEED A REALIZATION
 def login():
-    params = {
-        "namepass": "ok",
-        "botcheck": "ok"
-    }
+    params = {}
     if 'GET' == request.method:
         return render_template("login.html", **params)
 
-    for i in list(request.form.keys()):
-        print(i, request.form.get(i))
-
-    password = request.form.get("pass")
-    name = request.form.get("name")
-    obj = session.query(User).filter(User.name == name).first()
-    try:
-        if not obj.check_password(password):
-            params["namepass"] = "!"
-    except AttributeError:
-        params["namepass"] = "!"
-
-    if request.form.get("botcheck") is None:
-        params["botcheck"] = "!"
-
-    for ok in params.values():
-        if ok != "ok":
-            return render_template("login.html", **params)
-
+    ...
     return redirect("/lk")
 
 
-@app.route("/register", methods=['GET', 'POST'])  # NEED A REALIZATION
+@app.route("/register", methods=['GET', 'POST'])  # finished
 def register():
     params = {
         "name": "ok",
@@ -120,7 +128,7 @@ def register():
         params["name"] = "!"
     if request.form.get("email") in [i.email for i in session.query(User).all()]:
         params["email"] = "!"
-    if request.form.get("pass1") != request.form.get("pass2") or len(request.form.get("pass1")) == 0:
+    if request.form.get("pass1") != request.form.get("pass2"):
         params["pass"] = "!"
     if request.form.get("tg")[:13] != "https://t.me/":
         params["tg"] = "!"
@@ -148,11 +156,5 @@ def donate():
 
 
 if __name__ == '__main__':
-    api.add_resource(api_resources.UsersResource, '/api/user/<user_name>')
-    api.add_resource(api_resources.ItemResource, '/api/item/'
-                                                 'id=<item_id>;'
-                                                 'user_name=<user_name>;'
-                                                 'password=<password>')
-
     port = int(os.environ.get("PORT", 5000))
-    app.run(port=port, host='127.0.0.1')  # 0.0.0.0  # ?
+    app.run(debug=True, port=port, host='127.0.0.1')  # 0.0.0.0

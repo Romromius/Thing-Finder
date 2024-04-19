@@ -4,21 +4,25 @@
 <h2 style="text-align: center">Мои объявления</h2>
 
 <div class="ads">
+	{% for item in lst %}
 	<div class="dropdown-divider"></div>
-	<div style="background-color: aquamarine;">
-	  <table align="center" border="3" bgcolor="gray" cellspacing="0">
+	<div style="background-color: {{ colors[item.id % 9] }}">
+	  <table align="center" border="3" bgcolor="DimGray" cellspacing="0">
 		<thead></thead>
 		<tbody>
 		  <tr>
-			<td rowspan="2"><img src="static/img/vilka.png" width="400px" height="400px"></td>
-			<th width="250px">_Вилка_</th>
+			<td rowspan="2"><img src="static/img/noimage.png" width="400px" height="400px"></td>
+			  <th width="250px">Вещь: {{ item.name }}<br>
+			  	Хозяин: {{ item.get_owner().name }}
+			  </th>
 		  </tr>
 		  <tr>
-			<td height="60px">ID=10</td>
+			<th height="60px">ID={{ item.id }}</th>
 		  </tr>
 		</tbody>
 	  </table>
 	</div>
 	<div class="dropdown-divider"></div>
+	{% endfor %}
 </div>
 {% endblock %}
