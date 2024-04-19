@@ -78,6 +78,10 @@ class Item(SqlAlchemyBase, SerializerMixin):
         session.add(description)
         session.commit()
 
+    def get_owner(self) -> User:
+        session = create_session()
+        return session.get(User, self.owner)
+
 
 class Property(SqlAlchemyBase):
     __tablename__ = "prop_types"
