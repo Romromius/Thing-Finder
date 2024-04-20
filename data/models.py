@@ -1,4 +1,7 @@
 import _io
+from flask_wtf import FlaskForm
+from wtforms import PasswordField, StringField, TextAreaField, SubmitField, EmailField, BooleanField
+from wtforms.validators import DataRequired
 
 from sqlalchemy import *
 from sqlalchemy.orm import mapped_column, relationship, Mapped, DeclarativeBase
@@ -104,3 +107,19 @@ class PropValue(SqlAlchemyBase):
     id = Column(Integer, primary_key=True)
     type = Column(Integer, ForeignKey('prop_types.id'))
     value = Column(String)
+
+
+class LoginForm(FlaskForm):
+    email = EmailField('Почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
+
+
+class RegisterForm(FlaskForm):
+    name = StringField('Имя пользователя', validators=[DataRequired()])
+    email = EmailField('Почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
+    tg = StringField('Телеграм', validators=[DataRequired()])
+    submit = SubmitField('Зарегистрироваться')

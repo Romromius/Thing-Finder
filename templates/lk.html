@@ -1,8 +1,8 @@
 {% extends "main.html" %}
 {% block content %}
 
-<h2 style="text-align: center">Мои объявления</h2>
-
+<h2 style="text-align: center">Ваши объявления</h2>
+{% if current_user.is_authenticated %}
 <div class="ads">
 	{% for item in lst %}
 	<div class="dropdown-divider"></div>
@@ -25,4 +25,7 @@
 	<div class="dropdown-divider"></div>
 	{% endfor %}
 </div>
+{% else %}
+
+{% endif %}
 {% endblock %}

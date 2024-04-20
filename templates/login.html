@@ -1,33 +1,32 @@
 {% extends "main.html" %}
 {% block content %}
-<style type="text/css">
-	.err {
-		color: red;
-		text-align: center;
-	}
-</style>
 <div>
-	<h1 style="color: aqua; text-align: center; font-size: 45px">Войдите в аккаунт!</h1>
+	<h1 style="color:dodgerblue; text-align: center; font-size: 45px">Авторизация</h1>
 </div>
-
-
-<form class="login_form" method="post" style="{{ url }}">
-	{% if name == "!" or pass == "!" %}<p class="err">Неверное имя или пароль!</p>{% endif %}
-	<label for="name">Введите имя</label>
-	<input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
-
-	<label for="Password">Введите пароль</label>
-	<input type="password" class="form-control" id="Password" placeholder="Enter your password" name="pass">
-
-	{% if botcheck == "!" %}<p class="err">Вы не прошли проверку на бота</p>{% endif %}
-	<div class="form-group form-check">
-		<input type="checkbox" class="form-check-input" id="botcheck" name="botcheck">
-		<label class="form-check-label" for="botcheck">check for bot</label>
-	</div>
-
-    <div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-<title>login</title>
+<main class="d-flex justify-content-center py-5">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}
+            {{ form.email(class="form-control", type="email") }}
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                  {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}
+            {{ form.password(class="form-control", type="password") }}
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <button class="btn btn-primary w-100 py-2" type="submit">{{ form.submit(type="submit", class="btn btn-primary") }}</button>
+        <div style="color: red;">{{ msg }}</div>
+    </form>
+</main>
 {% endblock %}

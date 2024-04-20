@@ -1,1 +1,1 @@
-from .models import Description, User, Item, Property, PropValue
+from .models import Description, User, Item, Property, PropValue, LoginForm, RegisterForm

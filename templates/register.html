@@ -1,49 +1,66 @@
 {% extends "main.html" %}
 {% block content %}
-
-<style type="text/css">
-	.err {
-		color: red;
-	}
-</style>
-
-<div style="text-align: center">
-	<h1 style="color: aqua; font-size: 45px">Войдите в аккаунт!</h1>
-<a href="http://127.0.0.1:5000/login" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Login</a>
-	<h1 style="color: aqua; font-size: 45px">Или зарегистрируйтесь!</h1>
+<div>
+	<h1 style="color:dodgerblue; text-align: center; font-size: 45px">Регистрация</h1>
 </div>
+<main class="d-flex justify-content-center py-5">
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.name.label }}
+			{{ form.name(class="form-control") }}
+			{% for error in form.name.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</p>
 
-<form class="login_form" method="post" style="{{ url }}">
-	{% if name == "!" %}<p class="err">Имя занято</p>{% endif %}
-	<label for="name">Введите имя</label>
-	<input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+        <p>
+			{{ form.email.label }}
+			{{ form.email(class="form-control", type="email") }}
+			{% for error in form.email.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.password.label }}
+			{{ form.password(class="form-control", type="password") }}
+			{% for error in form.password.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.password_again.label }}
+			{{ form.password_again(class="form-control", type="password") }}
+			{% for error in form.password_again.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</p>
+        <p>
+			{{ form.tg.label }}
+			{{ form.tg(class="form-control") }}
+			{% for error in form.name.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</p>
+        <button class="btn btn-primary w-100 py-2" type="submit">{{ form.submit(type="submit", class="btn btn-primary") }}</button>
+		<div style="color: red;">{{ msg }}</div>
 
-	{% if email == "!" %}<p class="err">Почта занята</p>{% endif %}
-	<label for="email">Введите почту</label>
-	<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-<!--	ПОДУМАТЬ КАК РЕАЛИЗОВАТЬ ПРОВЕРКУ ПОЧТЫ ЧЕРЕЗ КОД	-->
-<!--	<label for="InputCode">Введите код с почты</label>-->
-<!--	<input type="text" class="form-control" id="InputCode" placeholder="Enter code from email" name="passcode">-->
-	<label for="Password1">Введите пароль</label>
-	<input type="password" class="form-control" id="Password1" placeholder="Enter new password" name="pass1">
-
-	{% if pass == "!" %}<p class="err">Пароли не совпадают/Пустое поле</p>{% endif %}
-	<label for="Password2">Повторите пароль</label>
-	<input type="password" class="form-control" id="Password2" placeholder="Repeat password" name="pass2">
-
-	{% if tg == "!" %}<p class="err">Неправильная ссылка</p>{% endif %}
-	<label for="Telegram">Вставьте ссылку на ваш телеграмм</label>
-	<input type="text" class="form-control" id="Telegram" placeholder="Enter telegram link" name="tg">
-
-	{% if botcheck == "!" %}<p class="err">Вы не прошли проверку на бота</p>{% endif %}
-	<div class="form-group form-check">
-		<input type="checkbox" class="form-check-input" id="botcheck" name="botcheck">
-		<label class="form-check-label" for="botcheck">check for bot</label>
-	</div>
-
-    <div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-
+	</form>
+</main>
 {% endblock %}
+
+
+
+
+
+

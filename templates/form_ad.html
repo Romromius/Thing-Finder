@@ -1,113 +1,116 @@
 {% extends "main.html" %}
 {% block content %}
+<div>
+	<h1 style="color:dodgerblue; text-align: center; font-size: 45px">Создание объявления</h1>
+</div>
 
-<form class="login_form" method="post">
+<form class="login_form" method="post" style="color:dodgerblue;">
 <!--    CHECK list_of_properties-->
     <label for="SelectPhoto">Выберите фото</label>
     <input type="file" class="form-control-file" id="SelectPhoto" name="photo">
 
     <label for="AdName">Название предмета</label>
     <input type="text" class="form-control" id="AdName" placeholder="Введите название предмета" name="name">
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Amount">Количество</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Amount">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in amount %}-->
-<!--          <option value="{{ amount.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Color">Цвет</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Color">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in color %}-->
-<!--          <option value="{{ color.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Material">Материал</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Material">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in material %}-->
-<!--          <option value="{{ material.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Defect">Дефект</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Defect">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in defects %}-->
-<!--          <option value="{{ defects.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-<!--      <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Case">Чехол</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Case">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in case %}-->
-<!--          <option value="{{ case.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Producer">Производитель</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Producer">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in prod %}-->
-<!--          <option value="{{ prod.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Form">Форма</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Form">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in form %}-->
-<!--          <option value="{{ form.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Size">Размер</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Size">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in size %}-->
-<!--          <option value="{{ size.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Strength">Прочность</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Strength">-->
-<!--        <option selected>strength</option>-->
-<!--        {% for i in strength %}-->
-<!--          <option value="{{ strength.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--      <label class="mr-sm-2" for="Other">Другое</label>-->
-<!--      <select class="custom-select mr-sm-2" id="Other">-->
-<!--        <option selected>none</option>-->
-<!--        {% for i in other %}-->
-<!--          <option value="{{ other.index(i) + 1 }}">{{ i }}</option>-->
-<!--        {% endfor %}-->
-<!--      </select>-->
-<!--    </div>-->
-
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Amount">Количество</label>
+      <select class="custom-select mr-sm-2" id="Amount">
+        <option selected>none</option>
+        {% for i in amount %}
+          <option value="{{ amount.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Color">Цвет</label>
+      <select class="custom-select mr-sm-2" id="Color">
+        <option selected>none</option>
+        {% for i in color %}
+          <option value="{{ color.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Material">Материал</label>
+      <select class="custom-select mr-sm-2" id="Material">
+        <option selected>none</option>
+        {% for i in material %}
+          <option value="{{ material.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Defect">Дефект</label>
+      <select class="custom-select mr-sm-2" id="Defect">
+        <option selected>none</option>
+        {% for i in defects %}
+          <option value="{{ defects.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+      <div class="form-group">
+      <label class="mr-sm-2" for="Case">Чехол</label>
+      <select class="custom-select mr-sm-2" id="Case">
+        <option selected>none</option>
+        {% for i in case %}
+          <option value="{{ case.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Producer">Производитель</label>
+      <select class="custom-select mr-sm-2" id="Producer">
+        <option selected>none</option>
+        {% for i in prod %}
+          <option value="{{ prod.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Form">Форма</label>
+      <select class="custom-select mr-sm-2" id="Form">
+        <option selected>none</option>
+        {% for i in form %}
+          <option value="{{ form.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Size">Размер</label>
+      <select class="custom-select mr-sm-2" id="Size">
+        <option selected>none</option>
+        {% for i in size %}
+          <option value="{{ size.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Strength">Прочность</label>
+      <select class="custom-select mr-sm-2" id="Strength">
+        <option selected>strength</option>
+        {% for i in strength %}
+          <option value="{{ strength.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label class="mr-sm-2" for="Other">Другое</label>
+      <select class="custom-select mr-sm-2" id="Other">
+        <option selected>none</option>
+        {% for i in other %}
+          <option value="{{ other.index(i) + 1 }}">{{ i }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <br>
 	<button type="submit" class="btn btn-primary">Submit</button>
 
 </form>

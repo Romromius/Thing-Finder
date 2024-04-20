@@ -18,19 +18,25 @@
           <svg class="bi" width="0" height="32" role="img" aria-label="Bootstrap"><use href=""></use></svg>
           <span class="material-symbols-rounded logo">
             travel_explore
-          </span> <span class="logo", style="font-size: 32px;">Lost Watermelon</span>
+          </span> <span class="logo" style="font-size: 32px;">Lost Watermelon</span>
         </a>
       </div>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/" class="nav-link px-2 link-secondary">Главная</a></li>
-        <li><a href="#" class="nav-link px-2">Добавить объявление</a></li>
-        <li><a href="#" class="nav-link px-2">Мои объявления</a></li>
+        <li><a href="/" class="nav-link px-2">Главная</a></li>
+        <li><a href="/form_ad" class="nav-link px-2">Добавить объявление</a></li>
+        {% if current_user.is_authenticated %}
+        <li><a href="/lk" class="nav-link px-2">Мои объявления</a></li>
+        {% endif %}
       </ul>
 
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Вход</button>
-        <button type="button" class="btn btn-primary">Регистрация</button>
+        {% if current_user.is_authenticated %}
+          <button type="button" onclick="document.location='/logout'" class="btn btn-outline-primary me-2">Выйти</button>
+        {% else %}
+          <button type="button" onclick="document.location='/login'" class="btn btn-outline-primary me-2">Вход</button>
+          <button type="button" onclick="document.location='/register'" class="btn btn-primary">Регистрация</button>
+        {% endif %}
       </div>
     </header>
   </div>
@@ -48,9 +54,9 @@
       </a>
 
       <ul class="nav col-md-4 justify-content-end">
-        <span class="material-symbols-rounded my_icons">volunteer_activism</span><li class="nav-item"><a href="/donate" class="nav-link px-2 text-body-secondary">Донат</a></li>
-        <span class="material-symbols-rounded my_icons">description</span><li class="nav-item"><a href="https://two-romans-project.notion.site/346dae57bf194e4a9f9b5bab4dd66355?pvs=4" class="nav-link px-2 text-body-secondary">Документация</a></li>
-        <span class="material-symbols-rounded my_icons">send</span><li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Бот</a></li>
+        <a href="/donate" class="nav-link px-2 text-body-secondary"><span class="material-symbols-rounded my_icons" style="padding: 0; margin: 0">volunteer_activism</span><li class="nav-item">Донат</a></li>
+        <a href="/catdocs" class="nav-link px-2 text-body-secondary"><span class="material-symbols-rounded my_icons" style="padding: 0; margin: 0">description</span><li class="nav-item">Документация</a></li>
+        <a href="https://t.me/lost_watermelon_bot" class="nav-link px-2 text-body-secondary"><span class="material-symbols-rounded my_icons" style="padding: 0; margin: 0">send</span><li class="nav-item">Бот</a></li>
       </ul>
     </footer>
   </div>

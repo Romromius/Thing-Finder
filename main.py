@@ -1,15 +1,15 @@
 import datetime
 
-from flask import Flask, render_template, request, url_for, redirect, send_file
+from flask import Flask, render_template, request, url_for, redirect, abort
 from data import db_session
 from data.__all_models import *
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import smtplib
 from email.mime.multipart import MIMEMultipart
 import os
 
 db_session.global_init("db/TF_db.sqlite")
 session = db_session.create_session()
-
 
 
 # def send_email(msg):
@@ -23,7 +23,7 @@ session = db_session.create_session()
 #     server.sendmail(sender, sender, msg)
 #
 #     server.quit()
-    # send_email("ququ")
+#     send_email("Тук-тук")
 
 
 def register_user(name, email, password, tg):
@@ -47,18 +47,24 @@ def register_user(name, email, password, tg):
 
 # \/----------------ОБРАБОТЧИКИ--------------\/
 app = Flask(__name__)
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
-    days=365
-)
+app.secret_key = b'fa22ca826F3+c02aef6cf_9572196a7$9c7e7dd3f2443a70e390#$0d3f7X0d4071ab8ec\n\xec]/'
+app.permanent_session_lifetime = datetime.timedelta(days=365)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
-@app.route('/index')  # ON FINISH LINE
+@login_manager.user_loader
+def load_user(user_id):
+    return session.query(User).get(user_id)
+
+
+@app.route('/index')  # finished
 @app.route('/')
 def site():
     params = {
         "url": url_for('static', filename='css/style.css'),
         "lst": session.query(Item).filter(Item.type == "0").filter(Item.status == "1").all(),
-        "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
+        "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "white", "purple"]
     }
     return render_template("home.html", **params)
 
@@ -89,60 +95,50 @@ def form_ad():
     return render_template("index_ads.html", **params)
 
 
-@app.route("/lk")  # NEED A COOKIE
+@app.route("/lk")  # finished
 def lk():
-    const = "4"
-    params = {
-        "lst": session.query(Item).filter(Item.owner == const).all(),
-        "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
+    if current_user.is_authenticated:
+        cur_user_id = current_user.id
+        params = {
+            "lst": session.query(Item).filter(Item.owner == cur_user_id).all(),
+            "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
         }
-    return render_template("lk.html", **params)
+        return render_template("lk.html", **params)
+    return abort(404)
 
 
-@app.route("/login", methods=['GET', 'POST'])  # NEED A REALIZATION
+@app.route("/login", methods=['GET', 'POST'])  # finished
 def login():
-    params = {}
-    if 'GET' == request.method:
-        return render_template("login.html", **params)
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = session.query(User).filter(User.email == form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/lk")
+        return render_template('login.html', msg="Неправильный логин или пароль", form=form)
+    return render_template("login.html", form=form)
 
-    ...
-    return redirect("/lk")
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 
 @app.route("/register", methods=['GET', 'POST'])  # finished
 def register():
-    params = {
-        "name": "ok",
-        "email": "ok",
-        "pass": "ok",
-        "tg": "ok",
-        "botcheck": "ok"
-    }
-    if 'GET' == request.method:
-        return render_template("register.html", **params)
-
-    for i in list(request.form.keys()):
-        print(i, request.form.get(i))
-
-    if request.form.get("name") in [i.name for i in session.query(User).all()]:
-        params["name"] = "!"
-    if request.form.get("email") in [i.email for i in session.query(User).all()]:
-        params["email"] = "!"
-    if request.form.get("pass1") != request.form.get("pass2"):
-        params["pass"] = "!"
-    if request.form.get("tg")[:13] != "https://t.me/":
-        params["tg"] = "!"
-    if request.form.get("botcheck") is None:
-        params["botcheck"] = "!"
-
-    for ok in params.values():
-        if ok != "ok":
-            return render_template("register.html", **params)
-
-    register_user(request.form.get("name"), request.form.get("email"), request.form.get("pass1"),
-                  request.form.get("tg"))
-
-    return redirect("/login")
+    form = RegisterForm()
+    if form.validate_on_submit():
+        if form.password.data != form.password_again.data:
+            return render_template('register.html', form=form, msg="Пароли не совпадают")
+        if session.query(User).filter(User.email == form.email.data).first():
+            return render_template('register.html', form=form, msg="Такой пользователь уже есть")
+        if form.tg.data[:13] != "https://t.me/":
+            return render_template('register.html', form=form, msg="Неправильный формат ссылки на телеграм")
+        register_user(form.name.data, form.email.data, form.password.data, form.tg.data)
+        return redirect('/login')
+    return render_template('register.html', title='Регистрация', form=form)
 
 
 @app.route("/catdocs")  # finished
