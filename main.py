@@ -1,5 +1,4 @@
 import datetime
-
 from flask import Flask, render_template, request, url_for, redirect, abort
 from data import db_session
 from data.__all_models import *
@@ -85,6 +84,9 @@ def form_ad():
         'strength': ['хрупчайший', 'хрупкий', 'нормальный', 'бронированный'],
         'other': ['неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый']
     }
+    # params = {
+    #     'props': ['Красный', 'Синий', 'Белый']
+    # }
     if 'GET' == request.method:
         return render_template("form_ad.html", **params)
 
