@@ -1,13 +1,57 @@
 {% extends "main.html" %}
 {% block content %}
 
-<form class="login_form" method="post">
+<form class="login_form" method="post" xmlns="http://www.w3.org/1999/html">
 <!--    CHECK list_of_properties-->
     <label for="SelectPhoto">Выберите фото</label>
     <input type="file" class="form-control-file" id="SelectPhoto" name="photo">
 
     <label for="AdName">Название предмета</label>
     <input type="text" class="form-control" id="AdName" placeholder="Введите название предмета" name="name">
+<br>
+
+
+
+<select class="btn btn-primary rounded-pill" id="props" name="props">
+    {% for item in props %}
+        <option value="{{ item }}">{{ item }}</option>
+    {% endfor %}
+</select>
+<button class="btn btn-link rounded-pill px-1" style="font-size: 1px; color: #000000;" type="button">
+    <span class="material-symbols-rounded">
+        close
+    </span>
+</button>
+
+
+
+<div id="container"></div>
+<br><button class="btn btn-secondary rounded-pill" type="button" onclick="addParam()">Добавить параметр</button>
+
+<script>
+const insertButton = document.getElementById('insertButton'); // Assuming your original button
+
+insertButton.addEventListener('click', () => {
+  const htmlBlock = `
+    <select class="btn btn-primary rounded-pill" id="props" name="props">
+    {% for item in props %}
+        <option value="{{ item }}">{{ item }}</option>
+    {% endfor %}
+</select>
+<button class="btn btn-link rounded-pill px-1" style="font-size: 1px; color: #000000;" type="button">
+    <span class="material-symbols-rounded">
+        close
+    </span>
+</button>
+  `;
+
+  // **Caution:** Using innerHTML can be vulnerable to XSS attacks if you're inserting user-generated content. Be cautious about this approach.
+
+  const container = document.getElementById('yourContainerId'); // Replace with your container element ID
+  container.innerHTML = htmlBlock;
+});
+
+</script>
 
 <!--    <div class="form-group">-->
 <!--      <label class="mr-sm-2" for="Amount">Количество</label>-->
@@ -108,7 +152,7 @@
 <!--      </select>-->
 <!--    </div>-->
 
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<br><br><button type="submit" class="btn btn-primary">Создать</button>
 
 </form>
 

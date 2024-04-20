@@ -1,6 +1,7 @@
 import datetime
 
 from flask import Flask, render_template, request, url_for, redirect, send_file
+from flask_login import login_required
 from data import db_session
 from data.__all_models import *
 import smtplib
@@ -9,7 +10,6 @@ import os
 
 db_session.global_init("db/TF_db.sqlite")
 session = db_session.create_session()
-
 
 
 # def send_email(msg):
@@ -79,6 +79,9 @@ def form_ad():
         'strength': ['хрупчайший', 'хрупкий', 'нормальный', 'бронированный'],
         'other': ['неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый']
     }
+    params = {
+        'props': ['Красный', 'Синий', 'Белый']
+    }
     if 'GET' == request.method:
         return render_template("form_ad.html", **params)
 
@@ -89,7 +92,8 @@ def form_ad():
     return render_template("index_ads.html", **params)
 
 
-@app.route("/lk")  # NEED A COOKIE
+@login_required
+@app.route("/cabinet")  # NEED A COOKIE
 def lk():
     const = "4"
     params = {
