@@ -9,6 +9,7 @@ session = db_session.create_session()
 items = session.query(Item).all()
 for i in items:
     print(i.name)
+    print('Владелец:', i.get_owner().name)
     print('Приметы:')
     [print('>', j) for j in i.get_props()]
     print('Анализ🤖...')
