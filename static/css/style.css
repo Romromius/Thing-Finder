@@ -10,3 +10,14 @@ padding: 10px;
 h1, h2 {
 text-align: center;
 }
+
+.my_icons {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 64px;
+    display: flex;
+    align-items: center;
+}

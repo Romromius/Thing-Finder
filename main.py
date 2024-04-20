@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, send_file
 from data import db_session
 from data.__all_models import *
 import smtplib
@@ -60,7 +60,7 @@ def site():
         "lst": session.query(Item).filter(Item.type == "0").filter(Item.status == "1").all(),
         "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
     }
-    return render_template("index_ads.html", **params)
+    return render_template("home.html", **params)
 
 
 @app.route("/form_ad", methods=['GET', 'POST'])  # NEED A BUTTON
