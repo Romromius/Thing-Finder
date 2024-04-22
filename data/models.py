@@ -70,7 +70,7 @@ class Item(SqlAlchemyBase, SerializerMixin):
         return fancy_props
 
     def set_image(self, file: bytes):
-        with open(f'db/images/{self.id}.png', 'wb') as f:
+        with open(f'static/item_images/{self.id}.png', 'wb') as f:
             f.write(file)
 
     def add_prop(self, prop_id):

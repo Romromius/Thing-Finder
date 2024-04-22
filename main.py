@@ -52,6 +52,16 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+@app.context_processor
+def handle_context():
+    return dict(os=os)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('not_found.html')
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).get(user_id)
@@ -97,7 +107,7 @@ def form_ad():
     return render_template("index_ads.html", **params)
 
 
-@app.route("/lk")  # finished
+@app.route("/cabinet")  # finished
 def lk():
     if current_user.is_authenticated:
         cur_user_id = current_user.id
@@ -106,7 +116,7 @@ def lk():
             "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
         }
         return render_template("lk.html", **params)
-    return abort(404)
+    return redirect('/login')
 
 
 @app.route("/login", methods=['GET', 'POST'])  # finished
@@ -116,7 +126,7 @@ def login():
         user = session.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect("/lk")
+            return redirect("/cabinet")
         return render_template('login.html', msg="Неправильный логин или пароль", form=form)
     return render_template("login.html", form=form)
 

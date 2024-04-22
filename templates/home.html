@@ -23,27 +23,34 @@
 
 
 <h1 class="pb-2 border-bottom" style="text-align: center;">Успешно найденные вещи</h1>
-
+<main class="d-flex justify-content-center">
 <div class="ads">
-	{% for item in lst %}
-	<div class="dropdown-divider"></div>
-	<div style="background-color: {{ colors[item.id % 9] }}">
-	  <table align="center" border="3" bgcolor="DimGray" cellspacing="0">
-		<thead></thead>
-		<tbody>
-		  <tr>
-			<td rowspan="2"><img src="static/img/noimage.png" width="400px" height="400px"></td>
-			  <th width="250px">Вещь: {{ item.name }}<br>
-			  	Хозяин: {{ item.get_owner().name }}
-			  </th>
-		  </tr>
-		  <tr>
-			<th height="60px">ID={{ item.id }}</th>
-		  </tr>
-		</tbody>
-	  </table>
-	</div>
-	<div class="dropdown-divider"></div>
+    {% for item in lst %}
+        <div class="card"></div>
+<!--    	<div style="background-color: {{ colors[item.id % 9] }}">-->
+            <table class="card rounded-3 shadow-sm" align="center" border="3" bgcolor="DimGray" cellspacing="0">
+                <thead>
+                <tbody>
+                        <td rowspan="2">
+                            {% if os.path.exists('static/item_images/' + item.id|string + '.png') %}
+                                <tr><img src="{{'static/item_images/' + item.id|string + '.png'}}" width="400px" height="400px" class="cropped"></tr>
+                            {% else %}
+                                <tr><img src="static/img/noimage.svg" width="400px" height="400px" class="invert-color"></tr>
+                            {% endif %}
+                        </td>
+                        <th width="250px">Вещь: {{ item.name }}<br>
+                            Хозяин: {{ item.get_owner().name }}
+                        </th>
+
+                <tr>
+                    <th height="60px">ID={{ item.id }}</th>
+                </tr>
+                </tbody>
+                </thead>
+            </table>
+<!--    	</div>-->
+        <div class="dropdown-divider"></div><br>
 	{% endfor %}
 </div>
+</main>
 {% endblock %}
