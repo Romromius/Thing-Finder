@@ -6,53 +6,53 @@
 <main class="d-flex justify-content-center py-5">
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
-		<p>
-			{{ form.name.label }}
+		<div class="form-floating">
 			{{ form.name(class="form-control") }}
+			{{ form.name.label }}
 			{% for error in form.name.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>
 			{% endfor %}
-		</p>
+		</div>
 
-        <p>
-			{{ form.email.label }}
+        <div class="form-floating">
 			{{ form.email(class="form-control", type="email") }}
+			{{ form.email.label }}
 			{% for error in form.email.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>
 			{% endfor %}
-		</p>
-		<p>
-			{{ form.password.label }}
+		</div>
+		<div class="form-floating">
 			{{ form.password(class="form-control", type="password") }}
+			{{ form.password.label }}
 			{% for error in form.password.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>
 			{% endfor %}
-		</p>
-		<p>
-			{{ form.password_again.label }}
+		</div>
+		<div class="form-floating">
 			{{ form.password_again(class="form-control", type="password") }}
+			{{ form.password_again.label }}
 			{% for error in form.password_again.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>
 			{% endfor %}
-		</p>
-        <p>
-			{{ form.tg.label }}
+		</div>
+        <div class="form-floating">
 			{{ form.tg(class="form-control") }}
+			{{ form.tg.label }}
 			{% for error in form.name.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>
 			{% endfor %}
-		</p>
-        <button class="btn btn-primary w-100 py-2" type="submit">{{ form.submit(type="submit", class="btn btn-primary") }}</button>
+		</div>
+        {{ form.submit(type="submit", class="btn btn-primary w-100 py-2") }}
 		<div style="color: red;">{{ msg }}</div>
 
 	</form>
