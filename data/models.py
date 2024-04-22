@@ -1,6 +1,7 @@
 import _io
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, TextAreaField, SubmitField, EmailField, BooleanField
+from wtforms import PasswordField, StringField, SubmitField, EmailField, BooleanField, SelectField, FileField
+from flask_wtf.file import FileRequired, FileAllowed
 from wtforms.validators import DataRequired
 
 from sqlalchemy import *
@@ -123,3 +124,23 @@ class RegisterForm(FlaskForm):
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
     tg = StringField('Телеграм', validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
+
+
+class AdForm(FlaskForm):
+    type = SelectField('Тип объявления', choices=['1', '0'], validators=[DataRequired()])
+    name = StringField('Название предмета', validators=[DataRequired()])
+    amount = SelectField('Количество', choices=['none', 'Один', 'Несколько', 'Множество'], validators=[DataRequired()])
+    color = SelectField('Цвет', choices=['none', 'Разноцветный', 'Красный', 'Синий', 'Зеленый', 'Желтый', 'Оранжевый',
+                                         'Фиолетовый', 'Розовый', 'Темно-синий', 'Темно-красный', 'Темно-зеленый',
+                                         'Бордовый', 'Коричневый', 'Черный', 'Белый'], validators=[DataRequired()])
+    material = SelectField('Материал', choices=['none', 'Дерево', 'Металл', 'Пластмасса', 'Стекло', 'Ткань', 'Резина'],
+                           validators=[DataRequired()])
+    defects = SelectField('Дефекты', choices=['none', 'Нет', 'Царапины', 'Трещины', 'Вмятины', 'Изношенный'], validators=[DataRequired()])
+    case = SelectField('В чехле', choices=['none', 'Нет', 'Да'], validators=[DataRequired()])
+    prod = SelectField('Производитель', choices=['none', 'Россия', 'Сша', 'Япония', 'Китай', 'Другое'], validators=[DataRequired()])
+    Form = SelectField('Форма', choices=['none', 'Круглый', 'Квадратный', 'Прямоугольный', 'Полукруглый', 'Цилиндр'], validators=[DataRequired()])
+    size = SelectField('Размер', choices=['none', 'мельчайший', 'маленький', 'средний', 'большой', 'огромный'], validators=[DataRequired()])
+    strength = SelectField('Прочность', choices=['none', 'хрупчайший', 'хрупкий', 'нормальный', 'бронированный'], validators=[DataRequired()])
+    other = SelectField('Другое', choices=['none', 'неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый'], validators=[DataRequired()])
+    submit = SubmitField('Отправить')
+

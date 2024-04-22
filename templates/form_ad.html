@@ -4,116 +4,152 @@
 	<h1 style="color:dodgerblue; text-align: center; font-size: 45px">Создание объявления</h1>
 </div>
 
-<form class="login_form" method="post" style="color:dodgerblue;">
-<!--    CHECK list_of_properties-->
-    <label for="SelectPhoto">Выберите фото</label>
-    <input type="file" class="form-control-file" id="SelectPhoto" name="photo">
+<main class="d-flex justify-content-center py-5">
+	<form action="" method="post" enctype="multipart/form-data">
+		{{ form.hidden_tag() }}
+		<div class="form-group">
+            <label for="photo">Добавьте картинку</label>
+            <input type="file" class="form-control-file" id="photo" name="photo">
+        </div>
 
-    <label for="AdName">Название предмета</label>
-    <input type="text" class="form-control" id="AdName" placeholder="Введите название предмета" name="name">
+		<br>
+		<p>(1-найденная вещь, 0-потерянная)</p>
+		<div class="form-floating">
+			{{ form.type(class="form-control") }}
+			{{ form.type.label }}
+			{% for error in form.type.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
 
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Amount">Количество</label>
-      <select class="custom-select mr-sm-2" id="Amount">
-        <option selected>none</option>
-        {% for i in amount %}
-          <option value="{{ amount.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Color">Цвет</label>
-      <select class="custom-select mr-sm-2" id="Color">
-        <option selected>none</option>
-        {% for i in color %}
-          <option value="{{ color.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Material">Материал</label>
-      <select class="custom-select mr-sm-2" id="Material">
-        <option selected>none</option>
-        {% for i in material %}
-          <option value="{{ material.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Defect">Дефект</label>
-      <select class="custom-select mr-sm-2" id="Defect">
-        <option selected>none</option>
-        {% for i in defects %}
-          <option value="{{ defects.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Case">Чехол</label>
-      <select class="custom-select mr-sm-2" id="Case">
-        <option selected>none</option>
-        {% for i in case %}
-          <option value="{{ case.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Producer">Производитель</label>
-      <select class="custom-select mr-sm-2" id="Producer">
-        <option selected>none</option>
-        {% for i in prod %}
-          <option value="{{ prod.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Form">Форма</label>
-      <select class="custom-select mr-sm-2" id="Form">
-        <option selected>none</option>
-        {% for i in form %}
-          <option value="{{ form.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Size">Размер</label>
-      <select class="custom-select mr-sm-2" id="Size">
-        <option selected>none</option>
-        {% for i in size %}
-          <option value="{{ size.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Strength">Прочность</label>
-      <select class="custom-select mr-sm-2" id="Strength">
-        <option selected>none</option>
-        {% for i in strength %}
-          <option value="{{ strength.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-    <div class="form-group">
-      <label class="mr-sm-2" for="Other">Другое</label>
-      <select class="custom-select mr-sm-2" id="Other">
-        <option selected>none</option>
-        {% for i in other %}
-          <option value="{{ other.index(i) + 1 }}">{{ i }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <br>
-	<button type="submit" class="btn btn-primary">Submit</button>
+		<br>
+		<div class="form-floating">
+			{{ form.name(class="form-control") }}
+			{{ form.name.label }}
+			{% for error in form.name.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
 
-</form>
+		<br>
+		<div class="form-floating">
+			{{ form.amount(class="form-control") }}
+			{{ form.amount.label }}
+
+			{% for error in form.amount.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.color(class="form-control") }}
+			{{ form.color.label }}
+			{% for error in form.color.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.material(class="form-control") }}
+			{{ form.material.label }}
+			{% for error in form.material.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.defects(class="form-control") }}
+			{{ form.defects.label }}
+			{% for error in form.defects.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.case(class="form-control") }}
+			{{ form.case.label }}
+			{% for error in form.case.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.prod(class="form-control") }}
+			{{ form.prod.label }}
+			{% for error in form.prod.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.Form(class="form-control") }}
+			{{ form.Form.label }}
+			{% for error in form.Form.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.size(class="form-control") }}
+			{{ form.size.label }}
+			{% for error in form.size.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.strength(class="form-control") }}
+			{{ form.strength.label }}
+			{% for error in form.strength.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+		<br>
+		<div class="form-floating">
+			{{ form.other(class="form-control") }}
+			{{ form.other.label }}
+			{% for error in form.other.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
+
+
+		<br>
+        {{ form.submit(type="submit", class="btn btn-primary w-100 py-2") }}
+		<div style="color: red;">{{ msg }}</div>
+	</form>
+</main>
 {% endblock %}

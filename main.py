@@ -44,6 +44,46 @@ def register_user(name, email, password, tg):
     session.commit()
 
 
+def add_item(photo, type, name, amount, color, material, defects, case, prod, Form, size, strength, other):  # ТАБЛИЦУ ДОПИСАТЬ
+    """
+        'type': ['1', '0'],
+        'amount': ['один', 'несколько', 'множество'],
+        'color': ['разноцветный', 'красный', 'синий', 'зеленый', 'желтый', 'оранжевый',
+                  'фиолетовый', 'розовый', 'темно-синий', 'темно-красный', 'темно-зеленый',
+                  'бордовый', 'коричневый', 'черный', 'белый'],
+        'material': ['дерево', 'металл', 'пластмасса', 'стекло', 'ткань', 'резина'],
+        'defects': ['нет', 'царапины', 'трещины', 'вмятины', 'изношенный'],
+        'case': ['нет', 'да'],
+        'prod': ['Россия', 'Сша', 'Япония', 'Китай', 'другое'],
+        'Form': ['круглый', 'квадратный', 'прямоугольный', 'полукруглый', 'цилиндр'],
+        'size': ['мельчайший', 'маленький', 'средний', 'большой', 'огромный'],
+        'strength': ['хрупчайший', 'хрупкий', 'нормальный', 'бронированный'],
+        'other': ['неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый']
+    """
+    item = Item()
+    item.owner = current_user.id
+    item.name = name
+    item.type = type
+    item.status = 0
+    session.add(item)
+    session.commit()
+
+    if photo:
+        photo.save(f'static/item_images/{item.id}.png')
+
+    for i in [amount, color, material, defects, case, prod, Form, size, strength, other]:
+        description = Description()
+        description.item = item.id
+        description.value = session.query(PropValue).filter(PropValue.value == i).first()
+        print(i, description.value)
+        if description.value is None:
+            description.value = "none"
+        else:
+            description.value = description.value.id
+        session.add(description)
+        session.commit()
+
+
 # \/----------------ОБРАБОТЧИКИ--------------\/
 app = Flask(__name__)
 app.secret_key = b'fa22ca826F3+c02aef6cf_9572196a7$9c7e7dd3f2443a70e390#$0d3f7X0d4071ab8ec\n\xec]/'
@@ -80,31 +120,19 @@ def site():
 
 @app.route("/form_ad", methods=['GET', 'POST'])  # NEED A BUTTON
 def form_ad():
-    params = {
-        'amount': ['один', 'несколько', 'множество'],
-        'color': ['разноцветный', 'красный', 'синий', 'зеленый', 'желтый', 'оранжевый',
-                  'фиолетовый', 'розовый', 'темно-синий', 'темно-красный', 'темно-зеленый',
-                  'бордовый', 'коричневый', 'черный', 'белый'],
-        'material': ['дерево', 'металл', 'пластмасса', 'стекло', 'ткань', 'резина'],
-        'defects': ['нет', 'царапины', 'трещины', 'вмятины', 'изношенный'],
-        'case': ['нет', 'да'],
-        'prod': ['Россия', 'Сша', 'Япония', 'Китай', 'другое'],
-        'form': ['круглый', 'квадратный', 'прямоугольный', 'полукруглый', 'цилиндр'],
-        'size': ['мельчайший', 'маленький', 'средний', 'большой', 'огромный'],
-        'strength': ['хрупчайший', 'хрупкий', 'нормальный', 'бронированный'],
-        'other': ['неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый']
-    }
-    # params = {
-    #     'props': ['Красный', 'Синий', 'Белый']
-    # }
-    if 'GET' == request.method:
-        return render_template("form_ad.html", **params)
-
-    for i in list(request.form.keys()):
-        print(i, request.form.get(i))
-
-    params = {"verdict": "Ваша форма отправлена успешно!"}
-    return render_template("index_ads.html", **params)
+    if current_user.is_authenticated:
+        form = AdForm()
+        if form.validate_on_submit():
+            photo = request.files['photo']
+            if form.name.data is not None:
+                add_item(photo, form.type.data, form.name.data, form.amount.data, form.color.data, form.material.data,
+                         form.defects.data,
+                         form.case.data, form.prod.data, form.Form.data, form.size.data, form.strength.data,
+                         form.other.data)
+                return render_template("successfully.html")
+            return render_template('form_ad.html', msg="Поле названия осталось пустым", form=form)
+        return render_template("form_ad.html", form=form)
+    return redirect('/login')
 
 
 @app.route("/cabinet")  # finished
@@ -155,7 +183,6 @@ def register():
 
 @app.route("/catdocs")  # finished
 def catdocs():
-
     return render_template("catdocs.html")
 
 
