@@ -1,6 +1,14 @@
 {% extends "main.html" %}
 {% block content %}
+<script>
+    function showPhoto() {
+        var photo = document.getElementById('photo');
+        photo.style.display = 'block';
+    }
+</script>
 
-<div style="text-align: center"><img src="static/img/donate.jpg" width="400px" height="400px"></div>
-
+<div style="text-align: center">
+<button onclick="showPhoto()">Задонатить</button>
+    <img src="{{ url_img }}" id="photo" width="400px" height="400px" style="display: none; margin-left: auto; margin-right: auto">
+</div>
 {% endblock %}

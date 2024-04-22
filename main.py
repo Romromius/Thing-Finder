@@ -47,7 +47,7 @@ def register_user(name, email, password, tg):
 # \/----------------ОБРАБОТЧИКИ--------------\/
 app = Flask(__name__)
 app.secret_key = b'fa22ca826F3+c02aef6cf_9572196a7$9c7e7dd3f2443a70e390#$0d3f7X0d4071ab8ec\n\xec]/'
-app.permanent_session_lifetime = datetime.timedelta(days=365)
+app.permanent_session_lifetime = datetime.timedelta(days=61)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -155,12 +155,14 @@ def register():
 
 @app.route("/catdocs")  # finished
 def catdocs():
+
     return render_template("catdocs.html")
 
 
 @app.route("/donate")  # finished
 def donate():
-    return render_template("donate.html")
+    params = {"url_img": url_for(endpoint="static", filename="img/donate.png")}
+    return render_template("donate.html", **params)
 
 
 if __name__ == '__main__':
