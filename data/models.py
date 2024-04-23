@@ -127,20 +127,34 @@ class RegisterForm(FlaskForm):
 
 
 class AdForm(FlaskForm):
-    type = SelectField('Тип объявления', choices=['1', '0'], validators=[DataRequired()])
+    type = SelectField('Тип объявления',
+                       choices=['1', '0'],
+                       validators=[DataRequired()])
     name = StringField('Название предмета', validators=[DataRequired()])
-    amount = SelectField('Количество', choices=['none', 'Один', 'Несколько', 'Множество'], validators=[DataRequired()])
-    color = SelectField('Цвет', choices=['none', 'Разноцветный', 'Красный', 'Синий', 'Зеленый', 'Желтый', 'Оранжевый',
-                                         'Фиолетовый', 'Розовый', 'Темно-синий', 'Темно-красный', 'Темно-зеленый',
-                                         'Бордовый', 'Коричневый', 'Черный', 'Белый'], validators=[DataRequired()])
-    material = SelectField('Материал', choices=['none', 'Дерево', 'Металл', 'Пластмасса', 'Стекло', 'Ткань', 'Резина'],
+    # amount = SelectField('Количество',
+    #                      choices=['none', 'Один', 'Несколько', 'Множество'],
+    #                      validators=[DataRequired()])
+    color = SelectField('Цвет',
+                        choices=['none', 'Разноцветный', 'Красный', 'Синий', 'Зеленый', 'Желтый', 'Оранжевый',
+                                 'Фиолетовый', 'Розовый', 'Бордовый', 'Коричневый', 'Черный', 'Белый'],
+                        validators=[DataRequired()])
+    material = SelectField('Материал',
+                           choices=['none', 'Дерево', 'Металл', 'Пластик', 'Стекло', 'Ткань', 'Резина'],
                            validators=[DataRequired()])
-    defects = SelectField('Дефекты', choices=['none', 'Нет', 'Царапины', 'Трещины', 'Вмятины', 'Изношенный'], validators=[DataRequired()])
-    case = SelectField('В чехле', choices=['none', 'Нет', 'Да'], validators=[DataRequired()])
-    prod = SelectField('Производитель', choices=['none', 'Россия', 'Сша', 'Япония', 'Китай', 'Другое'], validators=[DataRequired()])
-    Form = SelectField('Форма', choices=['none', 'Круглый', 'Квадратный', 'Прямоугольный', 'Полукруглый', 'Цилиндр'], validators=[DataRequired()])
-    size = SelectField('Размер', choices=['none', 'мельчайший', 'маленький', 'средний', 'большой', 'огромный'], validators=[DataRequired()])
-    strength = SelectField('Прочность', choices=['none', 'хрупчайший', 'хрупкий', 'нормальный', 'бронированный'], validators=[DataRequired()])
-    other = SelectField('Другое', choices=['none', 'неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый'], validators=[DataRequired()])
+    defects = SelectField('Дефекты',
+                          choices=['none', 'Царапина', 'Трещина', 'Вмятина', 'Изношен'],
+                          validators=[DataRequired()])
+    Form = SelectField('Форма',
+                       choices=['none', 'Круглый', 'Квадратный', 'Прямоугольный', 'Полукруглый', 'Цилиндр'],
+                       validators=[DataRequired()])
+    size = SelectField('Размер', choices=['none', 'Мельчайший', 'Маленький', 'Средний', 'Большой', 'Огромный'],
+                       validators=[DataRequired()])
+    strength = SelectField('Прочность', choices=['none', 'Хрупкий', 'Прочный'],
+                           validators=[DataRequired()])
+    other = SelectField('Другое',
+                        choices=['none', 'Неприятный запах', 'Приятный запах', 'Грязный', 'Опасный', 'Живой', 'Старый', 'В чехле'],
+                        validators=[DataRequired()])
+    brand = SelectField('Брэнд',
+                       choices=['none', 'Other', 'Xiaomi', 'Nokia', 'Apple', 'Huawei', 'HONOR', 'Samsung', 'DEXP', 'JBL', 'Google'],
+                       validators=[DataRequired()])
     submit = SubmitField('Отправить')
-

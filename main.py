@@ -44,21 +44,20 @@ def register_user(name, email, password, tg):
     session.commit()
 
 
-def add_item(photo, type, name, amount, color, material, defects, case, prod, Form, size, strength, other):  # ТАБЛИЦУ ДОПИСАТЬ
+def add_item(photo, type, name, color, material, defects, Form, size, strength, other, brand):  # ТАБЛИЦУ ДОПИСАТЬ
     """
-        'type': ['1', '0'],
-        'amount': ['один', 'несколько', 'множество'],
-        'color': ['разноцветный', 'красный', 'синий', 'зеленый', 'желтый', 'оранжевый',
-                  'фиолетовый', 'розовый', 'темно-синий', 'темно-красный', 'темно-зеленый',
-                  'бордовый', 'коричневый', 'черный', 'белый'],
-        'material': ['дерево', 'металл', 'пластмасса', 'стекло', 'ткань', 'резина'],
-        'defects': ['нет', 'царапины', 'трещины', 'вмятины', 'изношенный'],
-        'case': ['нет', 'да'],
-        'prod': ['Россия', 'Сша', 'Япония', 'Китай', 'другое'],
-        'Form': ['круглый', 'квадратный', 'прямоугольный', 'полукруглый', 'цилиндр'],
-        'size': ['мельчайший', 'маленький', 'средний', 'большой', 'огромный'],
-        'strength': ['хрупчайший', 'хрупкий', 'нормальный', 'бронированный'],
-        'other': ['неприятный запах', 'приятный запах', 'грязный', 'опасный', 'живой', 'старый']
+    :param photo:
+    :param type:
+    :param name:
+    :param color:
+    :param material:
+    :param defects:
+    :param Form:
+    :param size:
+    :param strength:
+    :param other:
+    :param brand:
+    :return:
     """
     item = Item()
     item.owner = current_user.id
@@ -71,14 +70,11 @@ def add_item(photo, type, name, amount, color, material, defects, case, prod, Fo
     if photo:
         photo.save(f'static/item_images/{item.id}.png')
 
-    for i in [amount, color, material, defects, case, prod, Form, size, strength, other]:
+    for i in [color, material, defects, Form, size, strength, other, brand]:
         description = Description()
         description.item = item.id
         description.value = session.query(PropValue).filter(PropValue.value == i).first()
-        print(i, description.value)
-        if description.value is None:
-            description.value = "none"
-        else:
+        if description.value is not None:
             description.value = description.value.id
         session.add(description)
         session.commit()
@@ -125,10 +121,9 @@ def form_ad():
         if form.validate_on_submit():
             photo = request.files['photo']
             if form.name.data is not None:
-                add_item(photo, form.type.data, form.name.data, form.amount.data, form.color.data, form.material.data,
-                         form.defects.data,
-                         form.case.data, form.prod.data, form.Form.data, form.size.data, form.strength.data,
-                         form.other.data)
+                add_item(photo, form.type.data, form.name.data, form.color.data, form.material.data,
+                         form.defects.data, form.Form.data, form.size.data, form.strength.data,
+                         form.other.data, form.brand.data)
                 return render_template("successfully.html")
             return render_template('form_ad.html', msg="Поле названия осталось пустым", form=form)
         return render_template("form_ad.html", form=form)

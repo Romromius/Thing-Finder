@@ -37,18 +37,6 @@
 
 		<br>
 		<div class="form-floating">
-			{{ form.amount(class="form-control") }}
-			{{ form.amount.label }}
-
-			{% for error in form.amount.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
 			{{ form.color(class="form-control") }}
 			{{ form.color.label }}
 			{% for error in form.color.errors %}
@@ -74,28 +62,6 @@
 			{{ form.defects(class="form-control") }}
 			{{ form.defects.label }}
 			{% for error in form.defects.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.case(class="form-control") }}
-			{{ form.case.label }}
-			{% for error in form.case.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.prod(class="form-control") }}
-			{{ form.prod.label }}
-			{% for error in form.prod.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>
@@ -146,6 +112,16 @@
 			{% endfor %}
 		</div>
 
+		<br>
+		<div class="form-floating">
+			{{ form.brand(class="form-control") }}
+			{{ form.brand.label }}
+			{% for error in form.color.errors %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endfor %}
+		</div>
 
 		<br>
         {{ form.submit(type="submit", class="btn btn-primary w-100 py-2") }}
