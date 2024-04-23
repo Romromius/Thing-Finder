@@ -37,86 +37,9 @@
 
 		<br>
 		<div class="form-floating">
-			{{ form.color(class="form-control") }}
-			{{ form.color.label }}
-			{% for error in form.color.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.material(class="form-control") }}
-			{{ form.material.label }}
-			{% for error in form.material.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.defects(class="form-control") }}
-			{{ form.defects.label }}
-			{% for error in form.defects.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.Form(class="form-control") }}
-			{{ form.Form.label }}
-			{% for error in form.Form.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.size(class="form-control") }}
-			{{ form.size.label }}
-			{% for error in form.size.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.strength(class="form-control") }}
-			{{ form.strength.label }}
-			{% for error in form.strength.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.other(class="form-control") }}
-			{{ form.other.label }}
-			{% for error in form.other.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
-
-		<br>
-		<div class="form-floating">
-			{{ form.brand(class="form-control") }}
-			{{ form.brand.label }}
-			{% for error in form.color.errors %}
+			{{ form.props(class="form-control", style="height: 1000px;") }}
+			{{ form.props.label }}
+			{% for error in form.props.errors %}
 				<div class="alert alert-danger" role="alert">
 					{{ error }}
 				</div>

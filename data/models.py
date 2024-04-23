@@ -2,6 +2,7 @@ import _io
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, SubmitField, EmailField, BooleanField, SelectField, FileField
 from flask_wtf.file import FileRequired, FileAllowed
+from wtforms.fields.choices import SelectMultipleField
 from wtforms.validators import DataRequired
 
 from sqlalchemy import *
@@ -14,7 +15,7 @@ from flask_login import UserMixin
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from data.db_session import SqlAlchemyBase, create_session
+from data.db_session import SqlAlchemyBase, create_session, global_init
 
 
 # Base = declarative_base()
@@ -127,34 +128,15 @@ class RegisterForm(FlaskForm):
 
 
 class AdForm(FlaskForm):
+    global_init('db/TF_db.sqlite')
     type = SelectField('Тип объявления',
-                       choices=['1', '0'],
+                       choices=['Нахождение', 'Пропажа'],
                        validators=[DataRequired()])
     name = StringField('Название предмета', validators=[DataRequired()])
     # amount = SelectField('Количество',
     #                      choices=['none', 'Один', 'Несколько', 'Множество'],
     #                      validators=[DataRequired()])
-    color = SelectField('Цвет',
-                        choices=['none', 'Разноцветный', 'Красный', 'Синий', 'Зеленый', 'Желтый', 'Оранжевый',
-                                 'Фиолетовый', 'Розовый', 'Бордовый', 'Коричневый', 'Черный', 'Белый'],
+    props = SelectMultipleField('Приметы',
+                        choices=[i.value for i in create_session().query(PropValue).all()],
                         validators=[DataRequired()])
-    material = SelectField('Материал',
-                           choices=['none', 'Дерево', 'Металл', 'Пластик', 'Стекло', 'Ткань', 'Резина'],
-                           validators=[DataRequired()])
-    defects = SelectField('Дефекты',
-                          choices=['none', 'Царапина', 'Трещина', 'Вмятина', 'Изношен'],
-                          validators=[DataRequired()])
-    Form = SelectField('Форма',
-                       choices=['none', 'Круглый', 'Квадратный', 'Прямоугольный', 'Полукруглый', 'Цилиндр'],
-                       validators=[DataRequired()])
-    size = SelectField('Размер', choices=['none', 'Мельчайший', 'Маленький', 'Средний', 'Большой', 'Огромный'],
-                       validators=[DataRequired()])
-    strength = SelectField('Прочность', choices=['none', 'Хрупкий', 'Прочный'],
-                           validators=[DataRequired()])
-    other = SelectField('Другое',
-                        choices=['none', 'Неприятный запах', 'Приятный запах', 'Грязный', 'Опасный', 'Живой', 'Старый', 'В чехле'],
-                        validators=[DataRequired()])
-    brand = SelectField('Брэнд',
-                       choices=['none', 'Other', 'Xiaomi', 'Nokia', 'Apple', 'Huawei', 'HONOR', 'Samsung', 'DEXP', 'JBL', 'Google'],
-                       validators=[DataRequired()])
     submit = SubmitField('Отправить')

@@ -27,7 +27,7 @@ session = db_session.create_session()
 
 def register_user(name, email, password, tg):
     """
-    функция регистрирует пользователя
+    Функция регистрирует пользователя
     (данные с сайта)
     :param name: имя
     :param email: почту
@@ -44,45 +44,37 @@ def register_user(name, email, password, tg):
     session.commit()
 
 
-def add_item(photo, type, name, color, material, defects, Form, size, strength, other, brand):  # ТАБЛИЦУ ДОПИСАТЬ
+def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
     """
     :param photo:
     :param type:
     :param name:
-    :param color:
-    :param material:
-    :param defects:
-    :param Form:
-    :param size:
-    :param strength:
-    :param other:
-    :param brand:
+    :param params:
     :return:
     """
+    session = db_session.create_session()
     item = Item()
     item.owner = current_user.id
     item.name = name
     item.type = type
     item.status = 0
     session.add(item)
-    session.commit()
+    # session.commit()
 
     if photo:
         photo.save(f'static/item_images/{item.id}.png')
 
-    for i in [color, material, defects, Form, size, strength, other, brand]:
+    for i in props:
         description = Description()
         description.item = item.id
         description.value = session.query(PropValue).filter(PropValue.value == i).first()
-        if description.value is not None:
-            description.value = description.value.id
         session.add(description)
         session.commit()
 
 
 # \/----------------ОБРАБОТЧИКИ--------------\/
 app = Flask(__name__)
-app.secret_key = b'fa22ca826F3+c02aef6cf_9572196a7$9c7e7dd3f2443a70e390#$0d3f7X0d4071ab8ec\n\xec]/'
+app.secret_key = 'GLORY TO THE WATERMELON!!!'
 app.permanent_session_lifetime = datetime.timedelta(days=61)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -121,9 +113,7 @@ def form_ad():
         if form.validate_on_submit():
             photo = request.files['photo']
             if form.name.data is not None:
-                add_item(photo, form.type.data, form.name.data, form.color.data, form.material.data,
-                         form.defects.data, form.Form.data, form.size.data, form.strength.data,
-                         form.other.data, form.brand.data)
+                add_item(photo, form.type.data, form.name.data, form.props.data)
                 return render_template("successfully.html")
             return render_template('form_ad.html', msg="Поле названия осталось пустым", form=form)
         return render_template("form_ad.html", form=form)
