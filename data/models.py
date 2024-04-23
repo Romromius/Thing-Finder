@@ -1,6 +1,8 @@
 import _io
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, TextAreaField, SubmitField, EmailField, BooleanField
+from wtforms import PasswordField, StringField, SubmitField, EmailField, BooleanField, SelectField, FileField
+from flask_wtf.file import FileRequired, FileAllowed
+from wtforms.fields.choices import SelectMultipleField
 from wtforms.validators import DataRequired
 
 from sqlalchemy import *
@@ -13,7 +15,7 @@ from flask_login import UserMixin
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from data.db_session import SqlAlchemyBase, create_session
+from data.db_session import SqlAlchemyBase, create_session, global_init
 
 
 # Base = declarative_base()
@@ -123,3 +125,18 @@ class RegisterForm(FlaskForm):
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
     tg = StringField('Телеграм', validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
+
+
+class AdForm(FlaskForm):
+    global_init('db/TF_db.sqlite')
+    type = SelectField('Тип объявления',
+                       choices=['Нахождение', 'Пропажа'],
+                       validators=[DataRequired()])
+    name = StringField('Название предмета', validators=[DataRequired()])
+    # amount = SelectField('Количество',
+    #                      choices=['none', 'Один', 'Несколько', 'Множество'],
+    #                      validators=[DataRequired()])
+    props = SelectMultipleField('Приметы',
+                        choices=[i.value for i in create_session().query(PropValue).all()],
+                        validators=[DataRequired()])
+    submit = SubmitField('Отправить')
