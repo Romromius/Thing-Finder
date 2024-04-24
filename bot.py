@@ -47,6 +47,7 @@ def register(message):
             return
         user.tg = message.from_user.id
         session.commit()
+        bot.delete_message(message.from_user.id, message.id)
         bot.send_message(message.from_user.id, 'Вы авторизованы.')
     except IndexError:
         bot.send_message(message.from_user.id, 'Аргументы указаны неверно.')
@@ -57,5 +58,7 @@ def te(message):
     send_notification('Romromius', 'Hello')
 
 
-async def run_bot():
+def run_bot():
     bot.infinity_polling()
+
+run_bot()

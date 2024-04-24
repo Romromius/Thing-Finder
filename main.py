@@ -81,10 +81,10 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
 
 
 def checkout(item_id: int):
-    logging.info('CHECKOUT FOR' + item_id + variants)
     session = db_session.create_session()
     item = session.get(Item, item_id)
     variants = item.seek_for_variants()
+    logging.info('CHECKOUT FOR' + str(item_id) + str(variants))
     for i in variants:
         goal = session.get(Item, i)
         send_notification(session.get(User, goal.owner),
