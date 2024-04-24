@@ -56,7 +56,7 @@ class Item(SqlAlchemyBase, SerializerMixin):
         session = create_session()
         for item in session.query(Item).filter(Item.type != self.type, Item.id != self.id):
             if jaccard_similarity(set(self.get_props()), set(item.get_props())) > 0.1:
-                variants[item.name] = jaccard_similarity(set(self.get_props()), set(item.get_props()))
+                variants[item.id] = jaccard_similarity(set(self.get_props()), set(item.get_props()))
 
         del session
         return {k: v for k, v in sorted(variants.items(), key=lambda x: x[1], reverse=True)}

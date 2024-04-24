@@ -6,6 +6,8 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 import smtplib
 from email.mime.multipart import MIMEMultipart
 import os
+from telebot import TeleBot
+import logging
 
 db_session.global_init("db/TF_db.sqlite")
 session = db_session.create_session()
@@ -56,7 +58,11 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
     item = Item()
     item.owner = current_user.id
     item.name = name
-    item.type = type
+    match type:
+        case "Потеря":
+            item.type = 0
+        case "Нахождение":
+            item.type = 1
     item.status = 0
     session.add(item)
     # session.commit()
@@ -67,9 +73,32 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
     for i in props:
         description = Description()
         description.item = item.id
-        description.value = session.query(PropValue).filter(PropValue.value == i).first()
+        description.value = session.query(PropValue).filter(PropValue.value == i).first().id
         session.add(description)
         session.commit()
+
+    checkout(item.id)
+
+
+def checkout(item_id: int):
+    logging.info('CHECKOUT FOR' + item_id + variants)
+    session = db_session.create_session()
+    item = session.get(Item, item_id)
+    variants = item.seek_for_variants()
+    for i in variants:
+        goal = session.get(Item, i)
+        send_notification(session.get(User, goal.owner),
+                          f'Найдено совпадение для объявления "{goal.name}".\n'
+                          f'Вы ищите "{item.name}"?\nПроверьте личный кабинет.')
+        break
+
+
+def send_notification(user: User, notification: str):
+    bot = TeleBot('6748575861:AAFkjSEXI0hxtNhU-Z8orkBeS4pR4s9_kN4')
+    if not user.tg:
+        print(user.name, 'has no tg')
+        return
+    bot.send_message(int(user.tg), notification)
 
 
 # \/----------------ОБРАБОТЧИКИ--------------\/
@@ -177,6 +206,12 @@ def donate():
     return render_template("donate.html", **params)
 
 
+@app.route("/test_function")
+def check_out():
+    checkout(3)
+    return render_template("successfully.html")
+
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, port=port, host='127.0.0.1')  # 0.0.0.0
+    app.run(debug=True, port=port, host='127.0.0.1')
