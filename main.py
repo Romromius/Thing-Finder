@@ -119,6 +119,11 @@ def not_found(error):
     return render_template('not_found.html')
 
 
+@app.errorhandler(500)
+def not_found(error):
+    return render_template('internal_error.html')
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return session.query(User).get(user_id)
@@ -210,6 +215,11 @@ def donate():
 def check_out():
     checkout(3)
     return render_template("successfully.html")
+
+
+@app.route('/error')
+def error():
+    raise Exception
 
 
 if __name__ == '__main__':
