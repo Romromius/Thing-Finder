@@ -37,3 +37,10 @@ h1, h2 {
 .cropped img {
     margin: -150px 0px 0px -150px;
 }
+
+.rubik {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
