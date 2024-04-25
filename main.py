@@ -27,20 +27,18 @@ session = db_session.create_session()
 #     send_email("Тук-тук")
 
 
-def register_user(name, email, password, tg):
+def register_user(name, email, password):
     """
     Функция регистрирует пользователя
     (данные с сайта)
     :param name: имя
     :param email: почту
     :param password: пароль
-    :param tg: ссылку тг
     :return: None
     """
     user = User()
     user.name = name
     user.email = email
-    user.tg = tg
     user.set_password(password)
     session.add(user)
     session.commit()
@@ -192,13 +190,12 @@ def logout():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        print(form.password.data, form.password_again.data)
         if form.password.data != form.password_again.data:
             return render_template('register.html', form=form, msg="Пароли не совпадают")
         if session.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', form=form, msg="Такой пользователь уже есть")
-        if form.tg.data[:13] != "https://t.me/":
-            return render_template('register.html', form=form, msg="Неправильный формат ссылки на телеграм")
-        register_user(form.name.data, form.email.data, form.password.data, form.tg.data)
+        register_user(form.name.data, form.email.data, form.password.data)
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
