@@ -121,7 +121,10 @@ def not_found(error):
 
 @app.errorhandler(500)
 def not_found(error):
-    return render_template('internal_error.html')
+    params = {
+        'error': error
+    }
+    return render_template('internal_error.html', **params)
 
 
 @login_manager.user_loader
