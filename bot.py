@@ -59,6 +59,7 @@ def te(message):
 
 
 def run_bot():
+    print('running', bot.user)
     bot.infinity_polling()
 
 run_bot()
