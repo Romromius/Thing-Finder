@@ -43,15 +43,6 @@
 				</div>
 			{% endfor %}
 		</div>
-        <div class="form-floating">
-			{{ form.tg(class="form-control") }}
-			{{ form.tg.label }}
-			{% for error in form.name.errors %}
-				<div class="alert alert-danger" role="alert">
-					{{ error }}
-				</div>
-			{% endfor %}
-		</div>
         {{ form.submit(type="submit", class="btn btn-primary w-100 py-2") }}
 		<div style="color: red;">{{ msg }}</div>
 

@@ -123,7 +123,6 @@ class RegisterForm(FlaskForm):
     email = EmailField('Почта', validators=[DataRequired()])
     password = PasswordField('Пароль', validators=[DataRequired()])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
-    tg = StringField('Телеграм', validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
 
 
