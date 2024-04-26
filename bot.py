@@ -21,13 +21,13 @@ def send_notification(username: str, notification: str):
 
 
 @bot.message_handler(commands=['start', 'help'])
-async def send_welcome(message):
+def send_welcome(message):
     session = create_session()
     user = session.query(User).filter(User.tg == message.from_user.id).first()
     if user:
-        await bot.send_message(message.from_user.id, f'Здравствуйте, {user.name}!')
+        bot.send_message(message.from_user.id, f'Здравствуйте, {user.name}!')
     else:
-        await bot.send_message(message.from_user.id, 'Здравствуйте! Вы не зарегистрированы. '
+        bot.send_message(message.from_user.id, 'Здравствуйте! Вы не зарегистрированы. '
                                                      'Используйте команду /register <ваш ник> <ваш пароль>')
 
 
