@@ -1,10 +1,12 @@
 import datetime
 from flask import Flask, render_template, request, url_for, redirect, abort
+
+import api_resources
 from data import db_session
 from data.__all_models import *
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-import smtplib
-from email.mime.multipart import MIMEMultipart
+from flask_restful import Api
+
 import os
 from telebot import TeleBot
 import logging
@@ -57,9 +59,9 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
     item.owner = current_user.id
     item.name = name
     match type:
-        case "Потеря":
+        case 'Пропажа':
             item.type = 0
-        case "Нахождение":
+        case 'Нахождение':
             item.type = 1
     item.status = 0
     session.add(item)
@@ -100,11 +102,12 @@ def send_notification(user: User, notification: str):
 
 
 # \/----------------ОБРАБОТЧИКИ--------------\/
-app = Flask(__name__)
+app = Flask('Lost_Watermelon')
 app.secret_key = 'GLORY TO THE WATERMELON!!!'
 app.permanent_session_lifetime = datetime.timedelta(days=61)
 login_manager = LoginManager()
 login_manager.init_app(app)
+api = Api(app)
 
 
 @app.context_processor
@@ -224,4 +227,6 @@ def error():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=False, port=port, host='0.0.0.0')
+    api.add_resource(api_resources.UsersResource, '/api/user')
+    api.add_resource(api_resources.ItemResource, '/api/item')
+    app.run(debug=True, port=port, host='0.0.0.0')

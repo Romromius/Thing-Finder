@@ -44,3 +44,7 @@ h1, h2 {
   font-weight: <weight>;
   font-style: normal;
 }
+
+.text-block {
+    margin-left:20px;
+}
