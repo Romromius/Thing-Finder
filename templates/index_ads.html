@@ -16,7 +16,9 @@
 		  <tr>
 			<td rowspan="2"><img src="static/img/noimage.png" width="400px" height="400px"></td>
 			  <th width="250px">Вещь: {{ item.name }}<br>
-			  	Хозяин: {{ item.get_owner().name }}
+			  	Хозяин: {{ item.get_owner().name }}<br>
+				Тип: {% if item.type == 1 %}Нахождение{% else %}Пропажа{% endif %}<br>
+				Статус: {% if item.status == 1 %}Найдено{% else %}Не найдено{% endif %}<br>
 			  </th>
 		  </tr>
 		  <tr>
