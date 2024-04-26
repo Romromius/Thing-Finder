@@ -53,6 +53,18 @@ def register(message):
         bot.send_message(message.from_user.id, 'Аргументы указаны неверно.')
 
 
+@bot.message_handler(commands=['unregister'])
+def unregister(message):
+    session = create_session()
+    user = session.query(User).filter(User.tg == message.from_user.id).first()
+    if not user:
+        bot.send_message(message.from_user.id, 'Вы и так не зарегистрированы.')
+        return
+    user.tg = None
+    session.commit()
+    bot.send_message(message.from_user.id, 'Вы деавторизованы. Прощайте 😢😭😩')
+
+
 @bot.message_handler(commands=['test'])
 def te(message):
     send_notification('Romromius', 'Hello')
