@@ -52,7 +52,6 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
     :param params:
     :return:
     """
-    session = db_session.create_session()
     item = Item()
     item.owner = current_user.id
     item.name = name
@@ -79,7 +78,6 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
 
 
 def checkout(item_id: int):
-    session = db_session.create_session()
     item = session.get(Item, item_id)
     variants = item.seek_for_variants()
     logging.info('CHECKOUT FOR' + str(item_id) + str(variants))
