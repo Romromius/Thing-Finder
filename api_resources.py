@@ -78,3 +78,26 @@ class ItemResource(Resource):
         else:
             abort(400, 'Invalid status')
         return jsonify({'message': 'OK'})
+
+    def delete(self):
+        args = self.parser.parse_args()
+
+        item_id = args['id']
+        user_name = args['user']
+        password = args['password']
+
+        abort_if_user_not_found(user_name)
+        abort_if_item_not_found(item_id)
+        session = create_session()
+        user = session.query(User).filter(User.name == user_name).first()
+        item = session.get(Item, item_id)
+        if not user.check_password(password):
+            abort(403, 'Wrong password')
+        if item.owner != user.id and item.status == 0:
+            abort(403, 'User has no access to this item')
+        item = session.get(Item, item_id)
+        for desc in session.query(Description).filter(Description.item == item.id).all():
+            session.delete(desc)
+        session.delete(item)
+        session.commit()
+        return jsonify({'message': 'OK'})
