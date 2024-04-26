@@ -227,4 +227,4 @@ if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     api.add_resource(api_resources.UsersResource, '/api/user')
     api.add_resource(api_resources.ItemResource, '/api/item')
-    app.run(debug=True, port=port, host='0.0.0.0')
+    app.run(debug=False, port=port, host='0.0.0.0')
