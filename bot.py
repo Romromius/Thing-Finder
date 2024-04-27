@@ -65,6 +65,22 @@ def unregister(message):
     bot.send_message(message.from_user.id, 'Вы деавторизованы. Прощайте 😢😭😩')
 
 
+@bot.message_handler(commands=['accept'])
+def accept(message):
+    session = create_session()
+    id1, id2 = extract_arg(message.text)[0], extract_arg(message.text)[1]
+    try:
+        item1 = session.query(Item).get(id1)
+        item2 = session.query(Item).get(id2)
+        email = item1.get_owner().email
+        item1.status = 1
+        item2.status = 1
+        session.commit()
+        bot.send_message(message.from_user.id, f'вот почта owner, свяжитесь с ним! {email}.')
+    except Exception:
+        bot.send_message(message.from_user.id, 'Один из id не найден в таблице! Повторите.')
+
+
 @bot.message_handler(commands=['test'])
 def te(message):
     send_notification('Romromius', 'Hello')
