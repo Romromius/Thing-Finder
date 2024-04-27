@@ -46,7 +46,7 @@ def register_user(name, email, password):
     session.commit()
 
 
-def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
+def add_item(photo, type, name, props):
     """
     :param photo:
     :param type:
@@ -87,7 +87,7 @@ def checkout(item_id: int):
         goal = session.get(Item, i)
         send_notification(session.get(User, goal.owner),
                           f'Найдено совпадение для объявления "{goal.name}".\n'
-                          f'Вы ищите "{item.name}"?\nПроверьте личный кабинет.')
+                          f'Вы ищите "{item.name}"?\nПроверьте личный кабинет и ответьте командой "/accept {item.name} {goal.name}" или проигнорируйте:')
         break
 
 
@@ -137,12 +137,11 @@ def site():
     params = {
         "url": url_for('static', filename='css/style.css'),
         "lst": session.query(Item).filter(Item.type == "0").filter(Item.status == "1").all(),
-        "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "white", "purple"]
     }
     return render_template("home.html", **params)
 
 
-@app.route("/form_ad", methods=['GET', 'POST'])  # NEED A BUTTON
+@app.route("/form_ad", methods=['GET', 'POST'])
 def form_ad():
     if current_user.is_authenticated:
         form = AdForm()
@@ -168,7 +167,7 @@ def lk():
     return redirect('/login')
 
 
-@app.route("/login", methods=['GET', 'POST'])  # finished
+@app.route("/login", methods=['GET', 'POST']) 
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -187,7 +186,7 @@ def logout():
     return redirect("/")
 
 
-@app.route("/register", methods=['GET', 'POST'])  # finished
+@app.route("/register", methods=['GET', 'POST'])  
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -201,12 +200,12 @@ def register():
     return render_template('register.html', title='Регистрация', form=form)
 
 
-@app.route("/catdocs")  # finished
+@app.route("/catdocs")  
 def catdocs():
     return render_template("catdocs.html")
 
 
-@app.route("/donate")  # finished
+@app.route("/donate")  
 def donate():
     params = {"url_img": url_for(endpoint="static", filename="img/donate.png")}
     return render_template("donate.html", **params)
