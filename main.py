@@ -87,7 +87,7 @@ def checkout(item_id: int):
         goal = session.get(Item, i)
         send_notification(session.get(User, goal.owner),
                           f'Найдено совпадение для объявления "{goal.name}".\n'
-                          f'Вы ищите "{item.name}"?\nПроверьте личный кабинет и ответьте командой "/accept {item.name} {goal.name}" или проигнорируйте:')
+                          f'Вы ищите "{item.name}"?\nПроверьте личный кабинет и ответьте командой "/accept {item.id} {goal.id}" или проигнорируйте.')
         break
 
 
