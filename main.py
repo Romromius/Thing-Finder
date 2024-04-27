@@ -67,7 +67,7 @@ def add_item(photo, type, name, props):  # ТАБЛИЦУ ДОПИСАТЬ
     session.commit()
 
     if photo:
-        photo.save(f'static/item_images/{item.id}.png')
+        photo.save(f'static/img/{item.id}.png')
 
     for i in props:
         description = Description()
