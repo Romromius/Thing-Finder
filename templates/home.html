@@ -27,13 +27,12 @@
 <div class="ads">
     {% for item in lst %}
         <div class="card"></div>
-<!--    	<div style="background-color: {{ colors[item.id % 9] }}">-->
             <table class="card rounded-3 shadow-sm" align="center" border="3" bgcolor="DimGray" cellspacing="0">
                 <thead>
                 <tbody>
                         <td rowspan="2">
-                            {% if os.path.exists('static/item_images/' + item.id|string + '.png') %}
-                                <tr><img src="{{'static/item_images/' + item.id|string + '.png'}}" width="400px" height="400px" class="cropped"></tr>
+                            {% if os.path.exists('static/img/' + item.id|string + '.png') %}
+                                <tr><img src="{{'static/img/' + item.id|string + '.png'}}" width="400px" height="400px" class="cropped"></tr>
                             {% else %}
                                 <tr><img src="static/img/noimage.svg" width="400px" height="400px" class="invert-color"></tr>
                             {% endif %}
@@ -48,7 +47,6 @@
                 </tbody>
                 </thead>
             </table>
-<!--    	</div>-->
         <div class="dropdown-divider"></div><br>
 	{% endfor %}
 </div>
