@@ -22,13 +22,13 @@ def send_notification(username: str, notification: str):
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
+    bot.send_message(message.from_user.id, "Здравствуйте! Вам доступны следующие команды: '/register <ваш ник> <ваш пароль>', '/unregister'")
     session = create_session()
     user = session.query(User).filter(User.tg == message.from_user.id).first()
     if user:
-        bot.send_message(message.from_user.id, f'Здравствуйте, {user.name}!')
+        bot.send_message(message.from_user.id, f'{user.name}!')
     else:
-        bot.send_message(message.from_user.id, 'Здравствуйте! Вы не зарегистрированы. '
-                                                     'Используйте команду /register <ваш ник> <ваш пароль>')
+        bot.send_message(message.from_user.id, 'Вы не зарегистрированы.')
 
 
 @bot.message_handler(commands=['register'])
