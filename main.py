@@ -67,7 +67,7 @@ def add_item(photo, type, name, props):
     session.commit()
 
     if photo:
-        photo.save(f'static/item_images/{item.id}.png')
+        photo.save(f'static/img/{item.id}.png')
 
     for i in props:
         description = Description()
@@ -161,7 +161,6 @@ def lk():
         cur_user_id = current_user.id
         params = {
             "lst": session.query(Item).filter(Item.owner == cur_user_id).all(),
-            "colors": ["red", "blue", "orange", "aquamarine", "yellow", "tomato", "pink", "glive", "teal"]
         }
         return render_template("lk.html", **params)
     return redirect('/login')
